@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UrlController;
+use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/edit/{id}',[UrlController::class,'edit'])->name('url.edit');
     Route::delete('/delete/{id}',[UrlController::class,'delete'])->name('url.delete');
     Route::post('/disable/{id}',[UrlController::class,'disable'])->name('url.disable');
-
 });
 
 Route::get('/{shortenedUrl}',[UrlController::class,'redirect']);
+Route::get('/r/{short_code}', [RedirectController::class, 'exitPage']);

@@ -43,7 +43,7 @@
                                 <th scope="row">{{ $serial++ }}</th>
                                 <td>{{ $url->original_url }}</td>
                                 <td>
-                                    <a href="{{ url($url->short_code) }}" target="_blank">{{ url($url->short_code) }}</a>
+                                    <a href="{{ url('/r/'.$url->short_code) }}" target="_blank">{{ url($url->short_code) }}</a>
                                 </td>
                                 <td>
                                     @if( $url->is_active == 0)

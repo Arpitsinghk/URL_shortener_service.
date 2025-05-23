@@ -26,4 +26,9 @@ class ShortUrl extends Model
     return $this->belongsTo(User::class);
 }
 
+public function analytics()
+{
+    return $this->hasMany(\App\Models\UrlAnalytics::class);
+}
+
 }

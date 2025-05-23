@@ -12,10 +12,10 @@ class UrlController extends Controller
         $urls = ShortUrl::where('user_id',auth()->id())->get();
         return view('shorturl.index',compact('urls'));
     }
-    public function edit($id){
-        $url_id = ShortUrl::findOrFail($id);
-        return view('shorturl.edit',compact('url_id'));
-    }
+    // public function edit($id){
+    //     $url_id = ShortUrl::findOrFail($id);
+    //     return view('shorturl.edit',compact('url_id'));
+    // }
     public function delete($id){
         $url_id = ShortUrl::findOrFail($id);
         $url_id->delete();
@@ -27,6 +27,22 @@ class UrlController extends Controller
         $url_id->save();
         return redirect('home')->with('success','URL disabled!');
     }
+
+    public function edit(Request $request, $id)
+{
+    $request->validate([
+        'original_url' => 'required|url',
+    ]);
+
+    $shortUrl = ShortUrl::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+    $shortUrl->update([
+        'original_url' => $request->original_url,
+        'expires_at' =>now()->addDays(7)
+    ]);
+
+    return redirect()->route('home')->with('success', 'URL updated successfully!');
+}
 
 
 

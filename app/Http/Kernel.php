@@ -2,8 +2,10 @@
 
 namespace App\Http;
 
+use App\Notifications\UrlExpirationReminder;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-
+use App\Models\shorturl;
 class Kernel extends HttpKernel
 {
     /**
@@ -64,4 +66,21 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+    // protected function schedule(Schedule $schedule){
+    //     $schedule->call(function(){
+    //         $urls = shorturl::where('expires_at', '<=', now()->addDays(1))
+    //         ->where('expires_at','>=',now())
+    //         ->get();
+    //         foreach($urls as $url){
+    //             $url->user->notify(new UrlExpirationReminder());
+    //         }
+    //     })->daily();
+    // }
+
+    protected function schedule(Schedule $schedule)
+{
+    $schedule->command('check:urlexpirations')->hourly();
+}
+
 }

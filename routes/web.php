@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UrlController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/home',[UrlController::class,'index'])->name('home');
+    Route::post('/submit_url',[UrlController::class,'store'])->name('store.url');
+    Route::post('/edit/{id}',[UrlController::class,'edit'])->name('url.edit');
+    Route::delete('/delete/{id}',[UrlController::class,'delete'])->name('url.delete');
+    Route::post('/disable/{id}',[UrlController::class,'disable'])->name('url.disable');
+
+});
+
+Route::get('/{shortenedUrl}',[UrlController::class,'redirect']);

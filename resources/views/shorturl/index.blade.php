@@ -53,29 +53,36 @@
 
                                     @endif
                                 </td>
-                                <td>{{ $url->expires_at ? $url->expires_at : 'Never' }}</td>
+                                <td>
+                                    {{ $url->expires_at ? \Carbon\Carbon::parse($url->expires_at)->format('F j, Y') : 'Never' }}
+                                </td>
+
                                 <td class="d-flex gap-2">
                                     <div class="dropdown">
-                                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editmodal{{ $url->id }}" style="display:inline;">
-                                        Edit
-                                    </button></li>
-                                        <li> <form class="dropdown-item" action="{{ route('url.disable',[$url->id]) }}" method="post" >
-                                        @csrf
-                                        <button class="dropdown-item" type="submit">Disable</button>
-                                    </form></li>
-                                        <li><form class="dropdown-item" action="{{ route('url.delete',[$url->id]) }}" method="post" >
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="dropdown-item" type="submit">Delete</button>
-                                    </form></li>
-                                    </ul>
+                                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editmodal{{ $url->id }}" style="display:inline;">
+                                                    Edit
+                                                </button></li>
+                                            <li>
+                                                <form class="dropdown-item" action="{{ route('url.disable',[$url->id]) }}" method="post">
+                                                    @csrf
+                                                    <button class="dropdown-item" type="submit">Disable</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form class="dropdown-item" action="{{ route('url.delete',[$url->id]) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="dropdown-item" type="submit">Delete</button>
+                                                </form>
+                                            </li>
+                                        </ul>
                                     </div>
 
-                                    
+
 
 
                                     <!--Edit Modal -->
@@ -102,7 +109,7 @@
                                         </div>
                                     </div>
 
-                                   
+
 
 
                                 </td>
